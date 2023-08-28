@@ -1,4 +1,3 @@
-/* Header.css */
 
 header {
     display: flex;
@@ -25,8 +24,42 @@ header {
     padding: 0.5rem 1rem;
     border-radius: 4px;
     transition: background-color 0.3s;
+
 }
 
 .navbarlinks a:hover {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+.moon-icon {
+    cursor: pointer;
+    font-size: 1.5m;
+    margin-left: 1rem;
+    align-self: center;
+    margin-top: 1rem;
+}
+
+
+/* Media query for screens smaller than 768px */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+
+    .navbarlinks {
+        width: 100%; 
+        justify-content: flex-start; 
+        flex-wrap: wrap; 
+    }
+
+    .navbarlinks a {
+        margin-right: 0.5rem;
+        padding: 0px;
+    }
+
+    .moon-icon {
+        margin-left: auto; 
+        margin-top: 0.5rem; 
+    }
 }
