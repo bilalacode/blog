@@ -8,7 +8,7 @@ const BlogFullView = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const blog = useSelector((state) =>
-    state.blogs.find((blog) => blog.id === Number(id))
+    state.blogs.find((blog) => blog.id === id)
   );
 
   useEffect(() => {
