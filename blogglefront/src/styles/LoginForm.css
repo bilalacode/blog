@@ -37,9 +37,10 @@ body:not(.dark-mode) .login-form {
 }
 
 .input-group input {
-    width: calc(100% - 2rem); /* Adjusted width to prevent touching the right side */
+    box-sizing: border-box;
+    width: 100%; 
     padding: 0.5rem 1rem;
-    border: 1px solid #555; /* Softened the border color */
+    border: 1px solid #555;
     border-radius: 4px;
     background-color: #444;
     color: #fff;

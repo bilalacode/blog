@@ -9,11 +9,13 @@ import { useEffect } from "react";
 import Notification from "./components/Notification";
 import Logout from "./components/Logout";
 import { loginUser } from "./reducers/authSlice";
+import CreateBlog from "./components/CreateBlog";
 import "./styles/App.css";
 
 const App = () => {
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blogs);
+  // const authCheck = useSelector(state => state.auth)
   useEffect(() => {
     if(window.localStorage.userData){
       console.log(window.localStorage.userData)
@@ -31,6 +33,7 @@ const App = () => {
     <>
       <Router>
         <Header />
+        {/* {authCheck.isLoggedIn && <CreateBlog />} */}
         <Routes>
           <Route path="/" element={<BlogsView blogs={blogs} />} />
           <Route path="/Authors" element={<h1>Authors</h1>} />
@@ -39,6 +42,7 @@ const App = () => {
           <Route path="/Logout" element={<Logout />} />
           <Route path="/Logout" element={<Logout />} />
           <Route path="/:id" element={<BlogFullView blogs={blogs} />} />
+          <Route path="/Create" element={<CreateBlog />} />
         </Routes>
       </Router>
       <Notification />
