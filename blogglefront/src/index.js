@@ -4,12 +4,15 @@ import App from "./App";
 import { configureStore } from "@reduxjs/toolkit";
 import blogSlice from "./reducers/blogSlice";
 import notificationSlice from "./reducers/notificationSlice";
+import authSlice from "./reducers/authSlice";
+
 import { Provider } from "react-redux";
 
 const store = configureStore({
   reducer: {
     blogs: blogSlice,
     notification: notificationSlice,
+    auth: authSlice,
   },
 });
 

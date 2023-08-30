@@ -1,11 +1,15 @@
 import "../styles/LoginForm.css";
-// import loginService from "../services/login";
 import { manageNotification } from "../reducers/notificationSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { manageUserLogin } from "../reducers/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const LoginForm = () => {
+  const authCheck = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleLogin = (event) => {
     event.preventDefault();
     try {
@@ -19,6 +23,13 @@ const LoginForm = () => {
       dispatch(manageNotification(error.message));
     }
   };
+
+  useEffect(() => {
+    if (authCheck.isLoggedIn) {
+      navigate("/");
+    }
+  }, [authCheck.isLoggedIn, navigate]);
+
   return (
     <div className="login-form">
       <h2>Login</h2>

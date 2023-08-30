@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import "../styles/BlogsView.css";
 
 const BlogsView = ({blogs}) => {
-
-
   return (
     <div className="blogs">
       {blogs ? (
