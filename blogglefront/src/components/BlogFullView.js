@@ -3,6 +3,7 @@ import '../styles/BlogFullView.css';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSingleBlog } from '../reducers/blogSlice';
+import CommentSection from './CommentSection';
 
 const BlogFullView = () => {
   const { id } = useParams();
@@ -10,6 +11,7 @@ const BlogFullView = () => {
   const blog = useSelector((state) =>
     state.blogs.find((blog) => blog.id === id)
   );
+
 
   useEffect(() => {
     // Check if the blog data is available in Redux store
@@ -19,11 +21,14 @@ const BlogFullView = () => {
     }
   }, [dispatch, blog, id]);
 
+  console.log(blog)
+
   if (!blog) {
     return <p>Loading blog...</p>;
   }
 
   return (
+    <>
     <div className="blog-full-view">
       <h1 className="blog-title">{blog.title}</h1>
       <div className="blog-meta">
@@ -32,6 +37,10 @@ const BlogFullView = () => {
       </div>
       <div className="blog-content">{blog.content}</div>
     </div>
+    <div className="comment-section">
+      <CommentSection comments={blog.comments} />
+    </div>
+    </>
   );
 };
 

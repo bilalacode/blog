@@ -33,7 +33,6 @@ const App = () => {
     dispatch(getUsersRequest());
   }, [dispatch]);
 
-  console.log(users, "users")
 
   return (
     <>

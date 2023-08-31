@@ -19,7 +19,6 @@ export default userSlice.reducer
 export const getUsersRequest = () => async (dispatch) => {
     try {
         const result = await userService.getUsers()
-        console.log(result, "result")
         dispatch(setUsers(result))
         return result
     } catch(error){
