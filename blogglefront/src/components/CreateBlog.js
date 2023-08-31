@@ -1,34 +1,23 @@
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { postABlog } from "../reducers/blogSlice";
+import { useNavigate } from "react-router-dom";
 import "../styles/CreateBlog.css";
 
 const CreateBlog = () => {
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-  const authCheck = useSelector((state) => state.auth); // Assuming you want to check if user is logged in before allowing to create a blog
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const authCheck = useSelector((state) => state.auth);
 
-  const handleBlogSubmit = (event) => {
+  const handleBlogSubmit = async (event) => {
     event.preventDefault();
     const title = event.target.title.value;
     const content = event.target.content.value;
-
-    try {
-      // Dispatch your action to add the blog
-      // For example:
-      // dispatch(addBlog({ title, content }));
-    } catch (error) {
-      // Handle any errors, for example:
-      // dispatch(manageNotification(error.message));
+    const newBlog = await dispatch(postABlog(title, content));
+    if (newBlog && newBlog.id) {
+      navigate(`/${newBlog.id}`);
     }
   };
-
-  //   useEffect(() => {
-  //     if (!authCheck.isLoggedIn) {
-  //       navigate("/login"); // Redirect to login if user is not logged in
-  //     }
-  //   }, [authCheck.isLoggedIn, navigate]);
 
   if (!authCheck.isLoggedIn) {
     return (

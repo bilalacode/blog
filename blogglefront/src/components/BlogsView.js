@@ -11,7 +11,9 @@ const BlogsView = ({ blogs }) => {
 
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-  const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
+  const currentBlogs = [...blogs]
+    .reverse()
+    .slice(indexOfFirstBlog, indexOfLastBlog);
 
   const totalPages = Math.ceil(blogs.length / blogsPerPage);
 
@@ -23,7 +25,12 @@ const BlogsView = ({ blogs }) => {
   return (
     <div className="blogs">
       <div className="welcomemessage">
-        {authCheck.isLoggedIn && <div>Welcome, {authCheck.user.name} <Link to="/Create">click here to create a new blog.</Link></div>}
+        {authCheck.isLoggedIn && (
+          <div>
+            Welcome, {authCheck.user.name}{" "}
+            <Link to="/Create">click here to create a new blog.</Link>
+          </div>
+        )}
       </div>
       {blogs ? (
         currentBlogs.map((blog) => (

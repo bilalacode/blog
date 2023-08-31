@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import loginService from "../services/login";
+import { manageNotification } from "./notificationSlice";
 
 const authSlice = createSlice({
   name: "auth",
@@ -28,16 +29,19 @@ export default authSlice.reducer;
 export const { loginUser, logoutUser } = authSlice.actions;
 
 export const manageUserLogin = (credentials) => async (dispatch) => {
-  const response = await loginService.login(credentials);
-  dispatch(
-    loginUser({
-      user: response.user,
-      token: response.token,
-    })
-  );
-  // console.log(response);
-  console.log(response)
-  localStorage.setItem("userData", JSON.stringify(response));
+  try {
+    const response = await loginService.login(credentials);
+    dispatch(
+      loginUser({
+        user: response.user,
+        token: response.token,
+      })
+    );
+    localStorage.setItem("userData", JSON.stringify(response));
+    dispatch(manageNotification("Login Success :)"));
+  } catch (error) {
+    dispatch(manageNotification(error.message));
+  }
 };
 
 export const manageUserLogout = () => (dispatch) => {

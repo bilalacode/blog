@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import blogService from "../services/blogs";
+import { manageNotification } from "./notificationSlice";
 
 const blogSlice = createSlice({
   name: "blogs",
@@ -14,10 +15,13 @@ const blogSlice = createSlice({
       );
       return updatedBlogs;
     },
+    addABlog: (state, action) => {
+      return state.concat(action.payload);
+    },
   },
 });
 
-export const { setBlogs, setSingleBlog } = blogSlice.actions;
+export const { setBlogs, setSingleBlog, addABlog } = blogSlice.actions;
 export default blogSlice.reducer;
 
 export const fetchBlogs = () => async (dispatch) => {
@@ -25,7 +29,7 @@ export const fetchBlogs = () => async (dispatch) => {
     const blogs = await blogService.getAll();
     dispatch(setBlogs(blogs));
   } catch (error) {
-    console.log(error);
+    dispatch(manageNotification(error.message));
   }
 };
 
@@ -34,6 +38,19 @@ export const fetchSingleBlog = (id) => async (dispatch) => {
     const blog = await blogService.getById(id);
     dispatch(setSingleBlog(blog));
   } catch (error) {
-    console.log(error);
+    dispatch(manageNotification(error.message));
+  }
+};
+
+export const postABlog = (title, content) => async (dispatch) => {
+  try {
+    const blog = { title, content };
+    const token = await JSON.parse(window.localStorage.getItem("userData"))
+      .token;
+    const result = await blogService.createBlog(blog, token);
+    dispatch(addABlog(result));
+    return result
+  } catch (error) {
+    dispatch(manageNotification(error.message));
   }
 };
