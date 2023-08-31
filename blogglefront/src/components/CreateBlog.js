@@ -13,7 +13,7 @@ const CreateBlog = () => {
     event.preventDefault();
     const title = event.target.title.value;
     const content = event.target.content.value;
-    const newBlog = await dispatch(postABlog(title, content));
+    const newBlog = dispatch(postABlog(title, content));
     if (newBlog && newBlog.id) {
       navigate(`/${newBlog.id}`);
     }

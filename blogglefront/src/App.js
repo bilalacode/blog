@@ -10,11 +10,14 @@ import Notification from "./components/Notification";
 import Logout from "./components/Logout";
 import { loginUser } from "./reducers/authSlice";
 import CreateBlog from "./components/CreateBlog";
+import AuthorsPage from "./components/AuthorsPage";
+import { getUsersRequest } from "./reducers/userSlice";
 import "./styles/App.css";
 
 const App = () => {
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blogs);
+  const users = useSelector(state => state.users)
   // const authCheck = useSelector(state => state.auth)
   useEffect(() => {
     if(window.localStorage.userData){
@@ -27,16 +30,18 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchBlogs());
+    dispatch(getUsersRequest());
   }, [dispatch]);
+
+  console.log(users, "users")
 
   return (
     <>
       <Router>
         <Header />
-        {/* {authCheck.isLoggedIn && <CreateBlog />} */}
         <Routes>
           <Route path="/" element={<BlogsView blogs={blogs} />} />
-          <Route path="/Authors" element={<h1>Authors</h1>} />
+          <Route path="/Authors" element={<AuthorsPage users={users} />} />
           <Route path="/About" element={<h1>About</h1>} />
           <Route path="/Login" element={<LoginForm />} />
           <Route path="/Logout" element={<Logout />} />
