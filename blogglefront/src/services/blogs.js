@@ -49,10 +49,26 @@ const toggleLike = async (id, token) => {
   }
 };
 
+const addComment = async (comment, token) => {
+  try {
+    const { content, id } = comment;
+    const result = await axios.post(
+      `${URL}/${id}/comments`,
+      { content },
+      tokenSet(token)
+    );
+    return result.data;
+  } catch (error) {
+    console.error(`Error adding a comment`, error);
+    throw error;
+  }
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getAll,
   getById,
   createBlog,
   toggleLike,
+  addComment,
 };

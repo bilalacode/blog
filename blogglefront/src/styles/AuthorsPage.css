@@ -24,11 +24,11 @@
 }
 
 body.dark-mode .author-container {
-    background-color: #444;
+        background-color: #333;
 }
 
 body.dark-mode .author-container:hover {
-    background-color: #333;
+    background-color: #222;
 }
 
 h2 {

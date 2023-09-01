@@ -25,6 +25,7 @@ body.dark-mode .comments-section {
 .comment:last-child {
   border-bottom: none;
 }
+
 .comment p {
   color: #333;
   transition: color 0.3s;
@@ -48,6 +49,7 @@ body.dark-mode .comment span {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
 }
 
 .add-comment-section h4 {
@@ -59,11 +61,20 @@ body.dark-mode .add-comment-section h4 {
   color: #fff;
 }
 
+.add-comment-section form {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+}
+
 .add-comment-section input {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   transition: border-color 0.3s;
+  flex: 1;
 }
 
 body.dark-mode .add-comment-section input {
@@ -93,4 +104,21 @@ body.dark-mode .add-comment-section button {
 
 body.dark-mode .add-comment-section button:hover {
   background-color: #333;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .add-comment-section form {
+    flex-direction: column;
+  }
+
+  .add-comment-section input {
+    margin-bottom: 0.5rem;
+    width: 100%
+  }
+
+  .add-comment-section button {
+    width: 30%;
+    max-width: none;
+  }
 }

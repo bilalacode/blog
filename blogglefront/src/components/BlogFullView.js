@@ -49,7 +49,7 @@
           <div className="blog-content">{blog.content}</div>
         </div>
         <div className="comment-section">
-          <CommentSection comments={blog.comments} />
+          <CommentSection blog={blog} />
         </div>
       </>
     );

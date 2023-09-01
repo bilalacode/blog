@@ -1,14 +1,23 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "../styles/CommentSection.css";
+import { addComment } from "../reducers/blogSlice";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
 
-const CommentSection = ({ comments }) => {
+const CommentSection = ({ blog }) => {
+    console.log(blog)
+    const {comments, id} = blog
   const authCheck = useSelector((state) => state.auth);
+  const commentInputRef = useRef(null);
+  const dispatch = useDispatch()
 
-  const handleAddComment = () => {
-    console.log("Hello")
+  const handleAddComment = (event) => {
+    event.preventDefault();
+    const content = commentInputRef.current.value;
+    dispatch(addComment(content, id));
+    commentInputRef.current.value = "";
   };
-
   return (
     <div className="comments-section">
       <h3>Comments:</h3>
@@ -21,8 +30,16 @@ const CommentSection = ({ comments }) => {
       {authCheck.isLoggedIn && (
         <div className="add-comment-section">
           <h4>Add a Comment:</h4>
-          <input type="text" placeholder="Your comment here..." />
-          <button onClick={handleAddComment}>Post Comment</button>
+          <form onSubmit={handleAddComment}>
+            <input
+              ref={commentInputRef} // Attach the ref to the input
+              name="commentbox"
+              type="text"
+              placeholder="Your comment here..."
+              required
+            />
+            <button type="submit">Comment</button>
+          </form>
         </div>
       )}
 

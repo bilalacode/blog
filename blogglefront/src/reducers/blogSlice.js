@@ -49,19 +49,32 @@ export const postABlog = (title, content) => async (dispatch) => {
       .token;
     const result = await blogService.createBlog(blog, token);
     dispatch(addABlog(result));
-    return result
+    return result;
   } catch (error) {
     dispatch(manageNotification(error.message));
   }
 };
 
-
 export const toggleLike = (id) => async (dispatch) => {
   try {
-    const token = await JSON.parse(window.localStorage.getItem("userData")).token;
-    const updatedBlog = await blogService.toggleLike(id, token); 
+    const token = await JSON.parse(window.localStorage.getItem("userData"))
+      .token;
+    const updatedBlog = await blogService.toggleLike(id, token);
     dispatch(setSingleBlog(updatedBlog));
   } catch (error) {
-    dispatch(manageNotification(error.message));
+    dispatch(manageNotification("Unable to like. Please login :)"));
+  }
+};
+
+export const addComment = (content, id) => async (dispatch) => {
+  try {
+    const token = await JSON.parse(window.localStorage.getItem("userData"))
+      .token;
+
+    const updatedBlog = await blogService.addComment({ content, id }, token);
+    console.log(updatedBlog)
+    await dispatch(setSingleBlog(updatedBlog));
+  } catch (error) {
+    dispatch(manageNotification("Unable to comment."));
   }
 };
