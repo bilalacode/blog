@@ -12,27 +12,27 @@ import { loginUser } from "./reducers/authSlice";
 import CreateBlog from "./components/CreateBlog";
 import AuthorsPage from "./components/AuthorsPage";
 import { getUsersRequest } from "./reducers/userSlice";
+import SignUpForm from "./components/SignUpForm";
 import "./styles/App.css";
 
 const App = () => {
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blogs);
-  const users = useSelector(state => state.users)
+  const users = useSelector((state) => state.users);
   // const authCheck = useSelector(state => state.auth)
   useEffect(() => {
-    if(window.localStorage.userData){
-      console.log(window.localStorage.userData)
-      const userData = JSON.parse(window.localStorage.userData)
-      dispatch(loginUser({user: userData.user, token: userData.token}))
+    if (window.localStorage.userData) {
+      console.log(window.localStorage.userData);
+      const userData = JSON.parse(window.localStorage.userData);
+      dispatch(loginUser({ user: userData.user, token: userData.token }));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     dispatch(fetchBlogs());
     dispatch(getUsersRequest());
   }, [dispatch]);
-
 
   return (
     <>
@@ -47,6 +47,7 @@ const App = () => {
           <Route path="/Logout" element={<Logout />} />
           <Route path="/:id" element={<BlogFullView blogs={blogs} />} />
           <Route path="/Create" element={<CreateBlog />} />
+          <Route path="/Signup" element={<SignUpForm />} />
         </Routes>
       </Router>
       <Notification />

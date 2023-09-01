@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { manageUserLogin } from "../reducers/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const authCheck = useSelector((state) => state.auth);
@@ -48,6 +49,10 @@ const LoginForm = () => {
         </div>
         <button type="submit">Login</button>
       </form>
+
+      <div className="signup-link">
+        Don't have an account? <Link to="/Signup">Sign Up</Link>
+      </div>
     </div>
   );
 };
