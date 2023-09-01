@@ -5,7 +5,9 @@ import "../styles/CommentSection.css";
 const CommentSection = ({ comments }) => {
   const authCheck = useSelector((state) => state.auth);
 
-  const handleAddComment = () => {};
+  const handleAddComment = () => {
+    console.log("Hello")
+  };
 
   return (
     <div className="comments-section">

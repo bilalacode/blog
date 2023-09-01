@@ -1,47 +1,58 @@
-import React, { useEffect } from 'react';
-import '../styles/BlogFullView.css';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchSingleBlog } from '../reducers/blogSlice';
-import CommentSection from './CommentSection';
+  import React, { useEffect } from "react";
+  import "../styles/BlogFullView.css";
+  import { useParams } from "react-router-dom";
+  import { useDispatch, useSelector } from "react-redux";
+  import { fetchSingleBlog, toggleLike } from "../reducers/blogSlice"; // Import toggleLike
+  import CommentSection from "./CommentSection";
 
-const BlogFullView = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const blog = useSelector((state) =>
-    state.blogs.find((blog) => blog.id === id)
-  );
+  const BlogFullView = () => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const blog = useSelector((state) =>
+      state.blogs.find((blog) => blog.id === id)
+    );
+    const user = useSelector((state) => state.auth.user); // Assuming you have user info in auth slice
 
+    useEffect(() => {
+      if (!blog) {
+        dispatch(fetchSingleBlog(id));
+      }
+    }, [dispatch, blog, id]);
 
-  useEffect(() => {
-    // Check if the blog data is available in Redux store
+    const handleLikeClick = () => {
+      dispatch(toggleLike(id));
+    };
+
+    const userHasLiked =
+      blog && user && blog.likes.some((like) => like.user === user.id);
+
     if (!blog) {
-      // If not, fetch the individual blog data by ID
-      dispatch(fetchSingleBlog(id));
+      return <p>Loading blog...</p>;
     }
-  }, [dispatch, blog, id]);
 
-  console.log(blog)
-
-  if (!blog) {
-    return <p>Loading blog...</p>;
-  }
-
-  return (
-    <>
-    <div className="blog-full-view">
-      <h1 className="blog-title">{blog.title}</h1>
-      <div className="blog-meta">
-        <span className="blog-author">By {blog.author}</span>
-        <span className="blog-likes">{blog.likes} Likes</span>
-      </div>
-      <div className="blog-content">{blog.content}</div>
-    </div>
-    <div className="comment-section">
-      <CommentSection comments={blog.comments} />
-    </div>
-    </>
-  );
-};
-
-export default BlogFullView;
+    return (
+      <>
+        <div className="blog-full-view">
+          <h1 className="blog-title">{blog.title}</h1>
+          <div className="blog-meta">
+            <span className="blog-author">By {blog.author}</span>
+            <span className="blog-likes">
+              <button
+                className={userHasLiked ? "liked" : ""}
+                onClick={handleLikeClick}
+              >
+                {userHasLiked ? "❤️" : "🖤"}
+              </button>
+              {blog.likes.length} Likes
+            </span>
+          </div>
+          <div className="blog-content">{blog.content}</div>
+        </div>
+        <div className="comment-section">
+          <CommentSection comments={blog.comments} />
+        </div>
+      </>
+    );
+  };
+  
+  export default BlogFullView;

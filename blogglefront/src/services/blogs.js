@@ -1,27 +1,58 @@
 import axios from "axios";
+
 const URL = "/api/blogs";
 
-let tokenSet = (token) => {
+const tokenSet = (token) => {
   return {
     headers: { Authorization: `Bearer ${token}` },
   };
 };
 
 const getAll = async () => {
-  const result = await axios.get(`${URL}`);
-  return result.data;
+  try {
+    const result = await axios.get(`${URL}`);
+    return result.data;
+  } catch (error) {
+    console.error("Error fetching all blogs:", error);
+    throw error;
+  }
 };
 
 const getById = async (id) => {
-  const result = await axios.get(`${URL}/${id}`);
-  return result.data;
+  try {
+    const result = await axios.get(`${URL}/${id}`);
+    return result.data;
+  } catch (error) {
+    console.error(`Error fetching blog with ID ${id}:`, error);
+    throw error;
+  }
 };
 
 const createBlog = async (blog, token) => {
-  const {title, content} = blog
-  const result = await axios.post(URL, { title, content }, tokenSet(token));
-  return result.data;
+  const { title, content } = blog;
+  try {
+    const result = await axios.post(URL, { title, content }, tokenSet(token));
+    return result.data;
+  } catch (error) {
+    console.error("Error creating blog:", error);
+    throw error;
+  }
 };
 
-// eslint-disable-next-line
-export default { getAll, getById, createBlog };
+const toggleLike = async (id, token) => {
+  try {
+    const result = await axios.put(`${URL}/${id}/like`, null, tokenSet(token));
+    return result.data;
+  } catch (error) {
+    console.error(`Error toggling like for blog with ID ${id}:`, error);
+    throw error;
+  }
+};
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
+  getAll,
+  getById,
+  createBlog,
+  toggleLike,
+};

@@ -1,10 +1,10 @@
 .blogs {
     display: flex;
-    /* flex-wrap: wrap; */
     gap: 2rem;
     padding: 2rem;
     flex-direction: column;
-    max-width: 80%;
+    max-width: 80%; 
+    margin: 0 auto; 
 }
 
 .blogindividual {

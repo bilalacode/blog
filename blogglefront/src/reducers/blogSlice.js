@@ -54,3 +54,14 @@ export const postABlog = (title, content) => async (dispatch) => {
     dispatch(manageNotification(error.message));
   }
 };
+
+
+export const toggleLike = (id) => async (dispatch) => {
+  try {
+    const token = await JSON.parse(window.localStorage.getItem("userData")).token;
+    const updatedBlog = await blogService.toggleLike(id, token); 
+    dispatch(setSingleBlog(updatedBlog));
+  } catch (error) {
+    dispatch(manageNotification(error.message));
+  }
+};
