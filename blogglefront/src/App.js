@@ -22,7 +22,6 @@ const App = () => {
   // const authCheck = useSelector(state => state.auth)
   useEffect(() => {
     if (window.localStorage.userData) {
-      console.log(window.localStorage.userData);
       const userData = JSON.parse(window.localStorage.userData);
       dispatch(loginUser({ user: userData.user, token: userData.token }));
     }

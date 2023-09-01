@@ -2,7 +2,7 @@
   import "../styles/BlogFullView.css";
   import { useParams } from "react-router-dom";
   import { useDispatch, useSelector } from "react-redux";
-  import { fetchSingleBlog, toggleLike } from "../reducers/blogSlice"; // Import toggleLike
+  import { fetchSingleBlog, toggleLike } from "../reducers/blogSlice"; 
   import CommentSection from "./CommentSection";
 
   const BlogFullView = () => {
@@ -11,7 +11,7 @@
     const blog = useSelector((state) =>
       state.blogs.find((blog) => blog.id === id)
     );
-    const user = useSelector((state) => state.auth.user); // Assuming you have user info in auth slice
+    const user = useSelector((state) => state.auth.user); 
 
     useEffect(() => {
       if (!blog) {

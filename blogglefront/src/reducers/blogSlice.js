@@ -72,7 +72,6 @@ export const addComment = (content, id) => async (dispatch) => {
       .token;
 
     const updatedBlog = await blogService.addComment({ content, id }, token);
-    console.log(updatedBlog)
     await dispatch(setSingleBlog(updatedBlog));
   } catch (error) {
     dispatch(manageNotification("Unable to comment."));

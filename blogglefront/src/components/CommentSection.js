@@ -6,7 +6,6 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 
 const CommentSection = ({ blog }) => {
-    console.log(blog)
     const {comments, id} = blog
   const authCheck = useSelector((state) => state.auth);
   const commentInputRef = useRef(null);
@@ -32,7 +31,7 @@ const CommentSection = ({ blog }) => {
           <h4>Add a Comment:</h4>
           <form onSubmit={handleAddComment}>
             <input
-              ref={commentInputRef} // Attach the ref to the input
+              ref={commentInputRef} 
               name="commentbox"
               type="text"
               placeholder="Your comment here..."

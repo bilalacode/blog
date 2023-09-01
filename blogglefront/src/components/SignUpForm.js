@@ -17,8 +17,7 @@ const SignUpForm = () => {
       await userService.signUpUser({username, name, password})
       dispatch(manageNotification("Sign up successful. Please login now."));
 
-      // Call your user registration service here
-      // For example: await userService.register(...)
+
       navigate("/Login"); 
     } catch (error) {
       dispatch(manageNotification(error.message));
